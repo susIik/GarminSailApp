@@ -1,0 +1,1 @@
+This is a Sailing app for garmin devices.
