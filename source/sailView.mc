@@ -1,6 +1,7 @@
 import Toybox.Graphics;
 import Toybox.WatchUi;
 import Toybox.Sensor;
+import Toybox.Position;
 
 class sailView extends WatchUi.View {
 
@@ -29,6 +30,16 @@ class sailView extends WatchUi.View {
     function onUpdate(dc as Dc) as Void {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
+
+        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+		//dc.clear();
+		
+		// Draw GPS Status
+		var gpsinfo = Position.getInfo();
+		//var gpsIsOkay = ( gpsinfo.accuracy == Position.QUALITY_GOOD || gpsinfo.accuracy == Position.QUALITY_USABLE );
+		
+		dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
+		dc.fillRectangle(0, dc.getHeight() -35, dc.getWidth(), 20);
     }
 
     // Called when this View is removed from the screen. Save the
@@ -49,5 +60,22 @@ class sailView extends WatchUi.View {
 
             WatchUi.requestUpdate();
     }
+
+
+    function getGPSQualityColour(g) {
+		var gpsInf;
+		if( g == null ) {
+			gpsInf = Position.getInfo();
+		} else {
+			gpsInf = g;
+		}
+	
+		if( gpsInf.accuracy == Position.QUALITY_GOOD ) {
+			return Graphics.COLOR_DK_GREEN;
+		} else if( gpsInf.accuracy == Position.QUALITY_USABLE ) {
+			return Graphics.COLOR_YELLOW;
+		}
+		return Graphics.COLOR_DK_RED;
+	}
 
 }

@@ -1,6 +1,7 @@
 import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
+using Toybox.Position;
 
 class sailApp extends Application.AppBase {
 
@@ -14,6 +15,15 @@ class sailApp extends Application.AppBase {
 
     // onStop() is called when your application is exiting
     function onStop(state as Dictionary?) as Void {
+        Position.enableLocationEvents( Position.LOCATION_DISABLE, method(:onPosition));
+    }
+
+    function onPosition( info as Position.Info ) as Void {
+        System.println( "Position " + info.position.toGeoString( Position.GEO_DM ) );
+    }
+
+    function initializeListener() as Void {
+        Position.enableLocationEvents( Position.LOCATION_CONTINUOUS, method( :onPosition ) );
     }
 
     // Return the initial view of your application here
