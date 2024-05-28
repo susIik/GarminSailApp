@@ -6,9 +6,11 @@ import Toybox.Position;
 class sailView extends WatchUi.View {
 
     private var _currentHeartRate;
+    private var lasthr;
 
     function initialize() {
         View.initialize();
+        lasthr = 0;
     }
 
     // Load your resources here
@@ -51,14 +53,17 @@ class sailView extends WatchUi.View {
 
     //Update heart rate info
     function updateHeartRate(sensorInfo as Sensor.Info) as Void {
-
-            if (sensorInfo.heartRate != null) {
-                _currentHeartRate.setText(sensorInfo.heartRate.toString());
+        var hr = sensorInfo.heartRate;
+        if (hr != lasthr) {
+            if (hr != null) {
+                _currentHeartRate.setText(hr.toString());
             } else {
-                _currentHeartRate.setText("???");
+                _currentHeartRate.setText("-");
             }
-
+            lasthr = hr;
             WatchUi.requestUpdate();
+            System.println("cool");
+        }
     }
 
 
