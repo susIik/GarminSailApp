@@ -2,11 +2,13 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 import Toybox.Sensor;
 import Toybox.Position;
+import Toybox.Activity;
 
 class sailView extends WatchUi.View {
 
     private var _currentHeartRate;
     private var lasthr;
+    private var _timer;
 
     function initialize() {
         View.initialize();
@@ -18,6 +20,7 @@ class sailView extends WatchUi.View {
         setLayout(Rez.Layouts.MainLayout(dc));
 
         _currentHeartRate = findDrawableById("heart_rate");
+        _timer = findDrawableById("timer");
         Sensor.enableSensorEvents( method(:updateHeartRate) );
     }
 
@@ -42,6 +45,10 @@ class sailView extends WatchUi.View {
 		
 		dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
 		dc.fillRectangle(0, dc.getHeight() -35, dc.getWidth(), 20);
+
+
+        _timer.setText(self.formatTime(1000));
+
     }
 
     // Called when this View is removed from the screen. Save the
@@ -82,5 +89,12 @@ class sailView extends WatchUi.View {
 		}
 		return Graphics.COLOR_DK_RED;
 	}
+
+    function formatTime(t) {
+        var h = t / 1000 / 60 / 60;
+        var m = t / 1000 / 60 % 60;
+        var s = t / 1000 % 60;
+        return h.format("%d") + ":" + m.format("%d") + ":" + s.format("%d");
+    }
 
 }
