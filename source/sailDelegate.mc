@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.ActivityRecording;
+using Toybox.Application as App;
 
 class sailDelegate extends WatchUi.BehaviorDelegate {
 
@@ -17,16 +18,7 @@ class sailDelegate extends WatchUi.BehaviorDelegate {
 
     function onKey(evt) {
         if (evt.getKey() == KEY_ENTER) {
-            if (( session == null ) || ( session.isRecording() == false )) {
-                session = ActivityRecording.createSession({:name=>"Sailing", :sport=>Activity.SPORT_SAILING});
-                session.start();
-                System.println("Started recording");
-            } else if ( session != null && session.isRecording() ) {
-                session.stop();
-                session.save();
-                session = null;
-                System.println("Stoped recording");
-            }
+            App.getApp().manageSession();
             return true;
         }
         return false;

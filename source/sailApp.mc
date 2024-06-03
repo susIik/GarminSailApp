@@ -5,6 +5,8 @@ using Toybox.Position;
 
 class sailApp extends Application.AppBase {
 
+    var session;
+
     function initialize() {
         AppBase.initialize();
     }
@@ -20,12 +22,25 @@ class sailApp extends Application.AppBase {
     }
 
     function onPosition( info as Position.Info ) as Void {
-        System.println( "Position " + info.position.toGeoString( Position.GEO_DM ) );
+        //System.println( "Position " + info.position.toGeoString( Position.GEO_DM ) );
     }
 
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
         return [ new sailView(), new sailDelegate() ];
+    }
+
+    function manageSession() {
+        if (( session == null ) || ( session.isRecording() == false )) {
+                session = ActivityRecording.createSession({:name=>"Sailing", :sport=>Activity.SPORT_SAILING});
+                session.start();
+                System.println("Started recording");
+            } else if ( session != null && session.isRecording() ) {
+                session.stop();
+                session.save();
+                session = null;
+                System.println("Stoped recording");
+            }
     }
 
 }

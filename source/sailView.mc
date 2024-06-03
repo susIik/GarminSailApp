@@ -3,16 +3,20 @@ import Toybox.WatchUi;
 import Toybox.Sensor;
 import Toybox.Position;
 import Toybox.Activity;
+using Toybox.Application as App;
 
 class sailView extends WatchUi.View {
 
     private var _currentHeartRate;
     private var lasthr;
     private var _timer;
+    private var _updateTimer;
 
     function initialize() {
         View.initialize();
         lasthr = 0;
+        _updateTimer = new Timer.Timer();
+        _updateTimer.start(new Lang.Method(WatchUi, :requestUpdate), 1000, true);
     }
 
     // Load your resources here
@@ -47,7 +51,8 @@ class sailView extends WatchUi.View {
 		dc.fillRectangle(0, dc.getHeight() -35, dc.getWidth(), 20);
 
 
-        _timer.setText(self.formatTime(1000));
+        _timer.setText(formatTime(Activity.getActivityInfo().elapsedTime));
+        System.println(Activity.getActivityInfo().elapsedTime);
 
     }
 
@@ -68,8 +73,8 @@ class sailView extends WatchUi.View {
                 _currentHeartRate.setText("-");
             }
             lasthr = hr;
-            WatchUi.requestUpdate();
-            System.println("cool");
+            //WatchUi.requestUpdate();
+            //System.println("cool");
         }
     }
 
@@ -91,6 +96,9 @@ class sailView extends WatchUi.View {
 	}
 
     function formatTime(t) {
+        if (t == null) {
+            return "0:0:0";
+        }
         var h = t / 1000 / 60 / 60;
         var m = t / 1000 / 60 % 60;
         var s = t / 1000 % 60;
