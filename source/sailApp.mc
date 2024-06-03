@@ -5,7 +5,7 @@ using Toybox.Position;
 
 class sailApp extends Application.AppBase {
 
-    var session;
+    private var session;
 
     function initialize() {
         AppBase.initialize();
@@ -31,16 +31,36 @@ class sailApp extends Application.AppBase {
     }
 
     function manageSession() {
-        if (( session == null ) || ( session.isRecording() == false )) {
+        if (session == null) {
                 session = ActivityRecording.createSession({:name=>"Sailing", :sport=>Activity.SPORT_SAILING});
                 session.start();
                 System.println("Started recording");
-            } else if ( session != null && session.isRecording() ) {
+            } else if (session.isRecording()) {
                 session.stop();
-                session.save();
-                session = null;
+                WatchUi.pushView(new Rez.Menus.ExitMenu(), new exitMenuDelegate(), WatchUi.SLIDE_UP);
+                WatchUi.requestUpdate();
                 System.println("Stoped recording");
             }
+    }
+
+    function saveSession() {
+        session.save();
+        session = null;
+        System.exit();
+    }
+
+    function discardSession() {
+        session.discard();
+        session = null;
+        System.exit();
+    }
+
+    function resumeSession() {
+        session.start();
+    }
+
+    function lapSession() {
+        session.addLap();
     }
 
 }

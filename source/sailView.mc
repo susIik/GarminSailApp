@@ -45,7 +45,6 @@ class sailView extends WatchUi.View {
 		
 		// Draw GPS Status
 		var gpsinfo = Position.getInfo();
-		//var gpsIsOkay = ( gpsinfo.accuracy == Position.QUALITY_GOOD || gpsinfo.accuracy == Position.QUALITY_USABLE );
 		
 		dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
 		dc.fillRectangle(0, dc.getHeight() -35, dc.getWidth(), 20);
@@ -73,8 +72,6 @@ class sailView extends WatchUi.View {
                 _currentHeartRate.setText("-");
             }
             lasthr = hr;
-            //WatchUi.requestUpdate();
-            //System.println("cool");
         }
     }
 

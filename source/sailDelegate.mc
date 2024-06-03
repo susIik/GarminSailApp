@@ -12,13 +12,16 @@ class sailDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function onMenu() as Boolean {
-        WatchUi.pushView(new Rez.Menus.MainMenu(), new sailMenuDelegate(), WatchUi.SLIDE_UP);
+        //WatchUi.pushView(new Rez.Menus.MainMenu(), new sailMenuDelegate(), WatchUi.SLIDE_UP);
         return true;
     }
 
     function onKey(evt) {
         if (evt.getKey() == KEY_ENTER) {
             App.getApp().manageSession();
+            return true;
+        } else if (evt.getKey() == KEY_ESC) {
+            App.getApp().lapSession();
             return true;
         }
         return false;
