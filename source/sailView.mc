@@ -8,13 +8,13 @@ using Toybox.Application as App;
 class sailView extends WatchUi.View {
 
     private var _currentHeartRate;
-    private var lasthr;
     private var _timer;
     private var _updateTimer;
+    private var _speed;
 
     function initialize() {
         View.initialize();
-        lasthr = 0;
+
         _updateTimer = new Timer.Timer();
         _updateTimer.start(new Lang.Method(WatchUi, :requestUpdate), 1000, true);
     }
@@ -25,7 +25,7 @@ class sailView extends WatchUi.View {
 
         _currentHeartRate = findDrawableById("heart_rate");
         _timer = findDrawableById("timer");
-        Sensor.enableSensorEvents( method(:updateHeartRate) );
+        _speed = findDrawableById("speed");
     }
 
 
@@ -47,12 +47,14 @@ class sailView extends WatchUi.View {
 		var gpsinfo = Position.getInfo();
 		
 		dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
-		dc.fillRectangle(0, dc.getHeight() -35, dc.getWidth(), 20);
+        dc.setPenWidth(3);
+        dc.drawCircle(dc.getWidth() / 2, dc.getHeight() / 2, dc.getHeight() / 2 - 3);
 
 
-        _timer.setText(formatTime(Activity.getActivityInfo().elapsedTime));
-        System.println(Activity.getActivityInfo().elapsedTime);
-
+        // Write info
+        self.updateHR(Sensor.getInfo());
+        self.updateSpeed(Sensor.getInfo());
+        self.updateTimer(Activity.getActivityInfo());
     }
 
     // Called when this View is removed from the screen. Save the
@@ -63,15 +65,34 @@ class sailView extends WatchUi.View {
 
 
     //Update heart rate info
-    function updateHeartRate(sensorInfo as Sensor.Info) as Void {
+    function updateHR(sensorInfo as Sensor.Info) as Void {
         var hr = sensorInfo.heartRate;
-        if (hr != lasthr) {
-            if (hr != null) {
-                _currentHeartRate.setText(hr.toString());
-            } else {
-                _currentHeartRate.setText("-");
-            }
-            lasthr = hr;
+        if (hr != null) {
+            _currentHeartRate.setText(hr.toString());
+        } else {
+            _currentHeartRate.setText("-");
+        }
+    }
+
+
+    //Update heart rate info
+    function updateSpeed(sensorInfo as Sensor.Info) as Void {
+        var speed = sensorInfo.speed;
+        if (speed != null) {
+            _speed.setText(speed.format("%.1f"));
+        } else {
+            _speed.setText("-");
+        }
+    }
+
+
+    //Update timer
+    function updateTimer(activityInfo as Activity.Info) as Void {
+        var timer = activityInfo.elapsedTime;
+        if (timer != null) {
+            _timer.setText(formatTime(timer));
+        } else {
+            _timer.setText("00:00:00");
         }
     }
 
@@ -93,13 +114,10 @@ class sailView extends WatchUi.View {
 	}
 
     function formatTime(t) {
-        if (t == null) {
-            return "0:0:0";
-        }
         var h = t / 1000 / 60 / 60;
         var m = t / 1000 / 60 % 60;
         var s = t / 1000 % 60;
-        return h.format("%d") + ":" + m.format("%d") + ":" + s.format("%d");
+        return h.format("%02d") + ":" + m.format("%02d") + ":" + s.format("%02d");
     }
 
 }
