@@ -23,7 +23,10 @@ class sailDelegate extends WatchUi.BehaviorDelegate {
         } else if (evt.getKey() == KEY_ESC) {
             App.getApp().lapSession();
             return true;
-        }
+        } //else if (evt.getKey() == KEY_DOWN) {
+        //    WatchUi.pushView(new sailTrackView(), new sailTrackDelegate(), WatchUi.SLIDE_UP);
+        //    return true;
+        //}
         return false;
     }
 

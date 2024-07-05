@@ -37,7 +37,7 @@ class sailApp extends Application.AppBase {
                 System.println("Started recording");
             } else if (session.isRecording()) {
                 session.stop();
-                WatchUi.pushView(new Rez.Menus.ExitMenu(), new exitMenuDelegate(), WatchUi.SLIDE_UP);
+                WatchUi.pushView(new Rez.Menus.ExitMenu(), new exitMenuDelegate(), WatchUi.SLIDE_LEFT);
                 WatchUi.requestUpdate();
                 System.println("Stoped recording");
             }
@@ -60,7 +60,9 @@ class sailApp extends Application.AppBase {
     }
 
     function lapSession() {
-        session.addLap();
+        if (session != null) {
+            session.addLap();
+        }
     }
 
 }
