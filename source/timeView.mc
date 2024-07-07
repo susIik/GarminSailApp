@@ -21,6 +21,7 @@ class timeView extends WatchUi.View {
         setLayout(Rez.Layouts.TimeLayout(dc));
 
         _time = findDrawableById("time");
+        _time.setText(self.getTime());
     }
 
 

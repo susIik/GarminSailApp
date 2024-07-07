@@ -26,6 +26,9 @@ class sailView extends WatchUi.View {
         _currentHeartRate = findDrawableById("heart_rate");
         _timer = findDrawableById("timer");
         _speed = findDrawableById("speed");
+        self.updateHR(Sensor.getInfo());
+        self.updateSpeed(Sensor.getInfo());
+        self.updateTimer(Activity.getActivityInfo());
     }
 
 
