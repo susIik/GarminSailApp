@@ -26,9 +26,6 @@ class sailView extends WatchUi.View {
         _currentHeartRate = findDrawableById("heart_rate");
         _timer = findDrawableById("timer");
         _speed = findDrawableById("speed");
-        self.updateHR(Sensor.getInfo());
-        self.updateSpeed(Sensor.getInfo());
-        self.updateTimer(Activity.getActivityInfo());
     }
 
 
@@ -36,6 +33,9 @@ class sailView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
+        self.updateHR(Sensor.getInfo());
+        self.updateSpeed(Sensor.getInfo());
+        self.updateTimer(Activity.getActivityInfo());
     }
 
     // Update the view
