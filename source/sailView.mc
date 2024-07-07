@@ -44,11 +44,15 @@ class sailView extends WatchUi.View {
 		//dc.clear();
 		
 		// Draw GPS Status
-		var gpsinfo = Position.getInfo();
+		//var gpsinfo = Position.getInfo();
 		
-		dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
-        dc.setPenWidth(3);
-        dc.drawCircle(dc.getWidth() / 2, dc.getHeight() / 2, dc.getHeight() / 2 - 3);
+		//dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
+        
+        
+        //Draw activity status
+        dc.setColor( self.activityColor(), Graphics.COLOR_BLACK);
+        dc.setPenWidth(6);
+        dc.drawCircle(dc.getWidth() / 2, dc.getHeight() / 2, dc.getHeight() / 2 - 6);
 
 
         // Write info
@@ -118,6 +122,10 @@ class sailView extends WatchUi.View {
         var m = t / 1000 / 60 % 60;
         var s = t / 1000 % 60;
         return h.format("%02d") + ":" + m.format("%02d") + ":" + s.format("%02d");
+    }
+
+    function activityColor() {
+        return App.getApp().session && App.getApp().session.isRecording() ? Graphics.COLOR_DK_GREEN : Graphics.COLOR_DK_RED;
     }
 
 }

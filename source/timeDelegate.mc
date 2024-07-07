@@ -3,7 +3,7 @@ import Toybox.WatchUi;
 import Toybox.ActivityRecording;
 using Toybox.Application as App;
 
-class sailDelegate extends WatchUi.BehaviorDelegate {
+class timeDelegate extends WatchUi.BehaviorDelegate {
 
     var session;
 
@@ -24,11 +24,11 @@ class sailDelegate extends WatchUi.BehaviorDelegate {
             App.getApp().lapSession();
             return true;
         } else if (evt.getKey() == KEY_DOWN) {
-            WatchUi.pushView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_UP);
+            WatchUi.pushView(App.getApp().sailTab[0], App.getApp().sailTab[1], WatchUi.SLIDE_UP);
             //WatchUi.pushView(new sailTrackView(), new sailTrackDelegate(), WatchUi.SLIDE_UP);
             return true;
         } else if (evt.getKey() == KEY_UP) {
-            WatchUi.pushView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_DOWN);
+            WatchUi.pushView(App.getApp().sailTab[0], App.getApp().sailTab[1], WatchUi.SLIDE_DOWN);
             //WatchUi.pushView(new sailTrackView(), new sailTrackDelegate(), WatchUi.SLIDE_UP);
             return true;
         }

@@ -5,7 +5,9 @@ using Toybox.Position;
 
 class sailApp extends Application.AppBase {
 
-    private var session;
+    var session = null;
+    var timeTab as [Views, InputDelegates] = [new timeView(), new timeDelegate()];
+    var sailTab as [Views, InputDelegates] = [new sailView(), new sailDelegate()];
 
     function initialize() {
         AppBase.initialize();
@@ -27,7 +29,7 @@ class sailApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [ new sailView(), new sailDelegate() ];
+        return [ sailTab[0], sailTab[1]];
     }
 
     function manageSession() {
