@@ -36,7 +36,7 @@ class sailApp extends Application.AppBase {
                 session.start();
                 Attention.vibrate([new Attention.VibeProfile(50, 2000)]);
                 Attention.playTone(Attention.TONE_START);
-                //System.println("Started recording");
+                //System.println("Started recording"); lesssgo
             } else if (session.isRecording()) {
                 session.stop();
                 WatchUi.pushView(new Rez.Menus.ExitMenu(), new exitMenuDelegate(), WatchUi.SLIDE_LEFT);
