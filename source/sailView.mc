@@ -12,6 +12,8 @@ class sailView extends WatchUi.View {
     private var _updateTimer;
     private var _speed;
 
+    var cusfont = null;
+
     function initialize() {
         View.initialize();
 
@@ -22,6 +24,8 @@ class sailView extends WatchUi.View {
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.MainLayout(dc));
+
+        cusfont = WatchUi.loadResource(Rez.Fonts.random);
 
         _currentHeartRate = findDrawableById("heart_rate");
         _timer = findDrawableById("timer");
@@ -43,19 +47,21 @@ class sailView extends WatchUi.View {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
 
-        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+        //dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
 		//dc.clear();
 		
 		// Draw GPS Status
-		//var gpsinfo = Position.getInfo();
-		
-		//dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
+		var gpsinfo = Position.getInfo();
+		dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
+        dc.fillCircle(30, dc.getHeight() / 2, 5);
         
         
         //Draw activity status
         dc.setColor( self.activityColor(), Graphics.COLOR_BLACK);
         dc.setPenWidth(6);
         dc.drawCircle(dc.getWidth() / 2, dc.getHeight() / 2, dc.getHeight() / 2 - 6);
+        //dc.setColor( Graphics.COLOR_RED, Graphics.COLOR_ORANGE);
+        //dc.drawText(100, 100, cusfont, "l", Graphics.TEXT_JUSTIFY_CENTER);
 
 
         // Write info
@@ -86,6 +92,7 @@ class sailView extends WatchUi.View {
     function updateSpeed(sensorInfo as Sensor.Info) as Void {
         var speed = sensorInfo.speed;
         if (speed != null) {
+            speed = speed * 1.94384;
             _speed.setText(speed.format("%.1f"));
         } else {
             _speed.setText("-");

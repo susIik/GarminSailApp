@@ -4,10 +4,12 @@ import Toybox.Sensor;
 import Toybox.Position;
 import Toybox.Activity;
 using Toybox.Application as App;
+import Toybox.Time.Gregorian;
 
 class timeView extends WatchUi.View {
     private var _updateTimer;
-    private var _time;
+    private var _clock;
+    private var _date;
 
     function initialize() {
         View.initialize();
@@ -20,7 +22,8 @@ class timeView extends WatchUi.View {
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.TimeLayout(dc));
 
-        _time = findDrawableById("time");
+        _clock = findDrawableById("clock");
+        _date = findDrawableById("date");
     }
 
 
@@ -28,7 +31,7 @@ class timeView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-        _time.setText(self.getTime());
+        self.getTime();
     }
 
     // Update the view
@@ -41,7 +44,7 @@ class timeView extends WatchUi.View {
         dc.setPenWidth(6);
         dc.drawCircle(dc.getWidth() / 2, dc.getHeight() / 2, dc.getHeight() / 2 - 6);
 
-        _time.setText(self.getTime());
+        self.getTime();
     }
 
     // Called when this View is removed from the screen. Save the
@@ -53,8 +56,10 @@ class timeView extends WatchUi.View {
 
     //Update heart rate info
     function getTime() {
-        var cur_time = System.getClockTime();
-        return cur_time.hour.format("%02d") + ":" + cur_time.min.format("%02d");
+        var cur_time = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+
+        _clock.setText(cur_time.hour.format("%02d") + ":" + cur_time.min.format("%02d"));
+        _date.setText(cur_time.month + " " + cur_time.day.format("%d"));
     }
 
     function activityColor() {
