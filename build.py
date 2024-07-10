@@ -7,7 +7,6 @@ def Build():
 
     for device in data["devices"]:
         out_path = f"./build/{device}/{data['name']}-{device}.prg"
-        #print(out_path)
         subprocess.run(["monkeyc", "-o", out_path, "-d", device, "-f", data["jungle"], "-y", data["key"]], shell=True)
 
 
