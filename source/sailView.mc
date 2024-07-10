@@ -53,7 +53,8 @@ class sailView extends WatchUi.View {
 		// Draw GPS Status
 		var gpsinfo = Position.getInfo();
 		dc.setColor( self.getGPSQualityColour(gpsinfo), Graphics.COLOR_BLACK);
-        dc.fillCircle(30, dc.getHeight() / 2, 5);
+        dc.setPenWidth(3);
+        dc.drawCircle(dc.getWidth() * 7 / 8, dc.getHeight() / 2, 36);
         
         
         //Draw activity status
