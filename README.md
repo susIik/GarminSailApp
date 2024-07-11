@@ -6,5 +6,10 @@ This is a Sailing app for garmin devices.
 
 - Find the right version of the app from build folder
 - Connect your watch with computer using the data cable
-- Copy `.prg` file to your watch folder `GARMIN\APPS`
+- Copy `.prg` file to your watch folder `GARMIN/Apps`
 - Now you can disconnect your watch from computer and you are ready to go
+
+---
+
+<img src="./resources/drawables/main-screen.png" width=30%>
+<img src="./resources/drawables/clock-screen.png" width=30%>

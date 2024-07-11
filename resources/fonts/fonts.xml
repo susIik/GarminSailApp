@@ -1,4 +1,4 @@
 <fonts>
-    <font id="random" filename="random.fnt" filter="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!№;%:?*()_+-=.,/|@#$^{}[]"/>
+    <font id="icons" filename="iconfont.fnt" antialias="true"/>
 
 </fonts>
