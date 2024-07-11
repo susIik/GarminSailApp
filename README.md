@@ -11,5 +11,4 @@ This is a Sailing app for garmin devices.
 
 ---
 
-<img src="./resources/drawables/main-screen.png" width=30%>
-<img src="./resources/drawables/clock-screen.png" width=30%>
+<img src="./resources/drawables/main-screen.png" width=30%> <img src="./resources/drawables/clock-screen.png" width=30%>
