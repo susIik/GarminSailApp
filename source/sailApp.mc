@@ -38,20 +38,19 @@ class sailApp extends Application.AppBase {
                 session.start();
                 Attention.vibrate([new Attention.VibeProfile(50, 2000)]);
                 Attention.playTone(Attention.TONE_START);
-                //System.println("Started recording");
             } else if (session.isRecording()) {
                 session.stop();
                 WatchUi.pushView(new Rez.Menus.ExitMenu(), new exitMenuDelegate(), WatchUi.SLIDE_LEFT);
                 WatchUi.requestUpdate();
                 Attention.vibrate([new Attention.VibeProfile(50, 2000)]);
                 Attention.playTone(Attention.TONE_STOP);
-                //System.println("Stoped recording");
             }
     }
 
     function saveSession() {
         session.save();
         session = null;
+        Attention.playTone(Attention.TONE_SUCCESS);
         System.exit();
     }
 
@@ -69,6 +68,8 @@ class sailApp extends Application.AppBase {
     function lapSession() {
         if (session != null) {
             session.addLap();
+            Attention.vibrate([new Attention.VibeProfile(50, 1000)]);
+            Attention.playTone(Attention.TONE_LAP);
         }
     }
 

@@ -17,6 +17,10 @@ class sailDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
+    function onSwipe(swipeEvt) as Boolean {
+        return true;
+    }
+
     function onKeyPressed(evt) {
         if (evt.getKey() == KEY_ENTER) {
             _keyTime = System.getTimer();
@@ -41,10 +45,10 @@ class sailDelegate extends WatchUi.BehaviorDelegate {
             App.getApp().lapSession();
             return true;
         } else if (evt.getKey() == KEY_DOWN) {
-            WatchUi.pushView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_UP);
+            WatchUi.switchToView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_UP);
             return true;
         } else if (evt.getKey() == KEY_UP) {
-            WatchUi.pushView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_DOWN);
+            WatchUi.switchToView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_DOWN);
             return true;
         }
         return false;
