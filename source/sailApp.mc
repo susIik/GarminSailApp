@@ -63,6 +63,7 @@ class sailApp extends Application.AppBase {
 
     function resumeSession() {
         session.start();
+        WatchUi.popView(WatchUi.SLIDE_RIGHT);
     }
 
     function lapSession() {

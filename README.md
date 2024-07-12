@@ -11,6 +11,6 @@ This is a Sailing app for garmin devices.
 
 ---
 
-Main view             |  Clock view
+Main view | Clock view
 :---:|:---:
-![](./resources/drawables/main-screen.png)  |  ![](./resources/drawables/clock-screen.png)
+![](./resources/drawables/main-screen.png) | ![](./resources/drawables/clock-screen.png)

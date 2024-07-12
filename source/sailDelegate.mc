@@ -6,6 +6,7 @@ using Toybox.Application as App;
 class sailDelegate extends WatchUi.BehaviorDelegate {
 
     var session;
+    private var _keyTime = null;
 
     function initialize() {
         BehaviorDelegate.initialize();
@@ -16,20 +17,34 @@ class sailDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
-    function onKey(evt) {
+    function onKeyPressed(evt) {
         if (evt.getKey() == KEY_ENTER) {
-            App.getApp().manageSession();
+            _keyTime = System.getTimer();
             return true;
-        } else if (evt.getKey() == KEY_ESC) {
+        }
+        return false;
+    }
+
+    function onKeyReleased(evt) {
+        if (evt.getKey() == KEY_ENTER) {
+            if ( _keyTime && System.getTimer() - _keyTime > 1000) {
+                App.getApp().manageSession();
+            }
+            _keyTime = null;
+            return true;
+        }
+        return false;
+    }
+
+    function onKey(evt) {
+        if (evt.getKey() == KEY_ESC) {
             App.getApp().lapSession();
             return true;
         } else if (evt.getKey() == KEY_DOWN) {
             WatchUi.pushView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_UP);
-            //WatchUi.pushView(new sailTrackView(), new sailTrackDelegate(), WatchUi.SLIDE_UP);
             return true;
         } else if (evt.getKey() == KEY_UP) {
             WatchUi.pushView(App.getApp().timeTab[0], App.getApp().timeTab[1], WatchUi.SLIDE_DOWN);
-            //WatchUi.pushView(new sailTrackView(), new sailTrackDelegate(), WatchUi.SLIDE_UP);
             return true;
         }
         return false;
